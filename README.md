@@ -55,7 +55,6 @@ If you see repeated `lockfile missing swc dependencies` warnings, set `NEXT_IGNO
 2. Push schema and seed admin:
 
 ```bash
-cd web
 npm install
 npm run db:push
 npm run seed:admin
@@ -71,14 +70,17 @@ Visit http://localhost:3000 for marketing, http://localhost:3000/login for admin
 
 ## Deploy on Vercel
 
-1. Import the repo; set **Root Directory** to `web`.
-2. Add the environment variables above for **Production** (and Preview if using a DB).
-3. Deploy. `postbuild` runs `drizzle-kit push` and `seed:admin` when a database URL is present.
+1. Import [BCMemberDemo](https://github.com/brett96/BCMemberDemo). Leave **Root Directory** empty (`.`). This folder is the Git repo root on GitHub; locally it lives under `BCMemberDemo/web/` next to `mockup.html`.
+2. In Vercel → Settings → General, confirm **Root Directory** is not set to `web` (that path does not exist in the repo).
+3. Add the environment variables above for **Production** (and Preview if using a DB).
+4. Deploy. `postbuild` runs `drizzle-kit push` and `seed:admin` when a database URL is present.
+
+If a build fails with missing `lightningcss.linux-x64-gnu` or `@tailwindcss/oxide-linux-x64-gnu`, redeploy after pulling the latest `package.json` / `package-lock.json` (Linux native bindings are listed in `optionalDependencies`).
 
 ## Project structure
 
 ```
-web/src/
+src/
 ├── app/
 │   ├── (marketing)/     # Public site + analytics provider
 │   ├── admin/           # Dashboard (protected)

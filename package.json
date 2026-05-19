@@ -67,7 +67,9 @@
     "@next/swc-win32-arm64-msvc": "16.2.6",
     "@next/swc-win32-x64-msvc": "16.2.6",
     "lightningcss-linux-x64-gnu": "1.32.0",
-    "lightningcss-linux-x64-musl": "1.32.0"
+    "lightningcss-linux-x64-musl": "1.32.0",
+    "@tailwindcss/oxide-linux-x64-gnu": "4.3.0",
+    "@tailwindcss/oxide-linux-x64-musl": "4.3.0"
   },
   "overrides": {
     "nodemailer": "^7.0.7"
