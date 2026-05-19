@@ -56,14 +56,35 @@ export async function appendInquiryToSheet(
     });
 
     const bodyText = await res.text();
+    const trimmed = bodyText.trim();
+    const looksLikeHtml =
+      trimmed.toLowerCase().startsWith("<!doctype") ||
+      trimmed.toLowerCase().startsWith("<html") ||
+      bodyText.includes("Access Denied");
 
-    const looksLikeHtml = bodyText.trim().toLowerCase().startsWith("<");
     if (!res.ok || looksLikeHtml) {
-      const snippet = bodyText.slice(0, 200).replace(/\s+/g, " ").trim();
-      const msg = `Sheet append failed (${res.status}): ${snippet || "no body"}`;
+      const hint = looksLikeHtml
+        ? " — URL must be the deployed Web App endpoint ending in /exec, not script.google.com/.../edit."
+        : "";
+      const preview = looksLikeHtml
+        ? " [HTML error page]"
+        : ` ${bodyText.slice(0, 200)}`;
+      const msg = `Sheet webhook failed: ${res.status}${hint}${preview}`;
       console.error("[sheets]", msg);
       await setSiteSetting("last_sheet_error", msg);
       return { ok: false, error: msg };
+    }
+
+    try {
+      const json = JSON.parse(bodyText) as { ok?: boolean; error?: string };
+      if (json && json.ok === false && json.error) {
+        const msg = `Sheet webhook: ${json.error}`;
+        console.error("[sheets]", msg);
+        await setSiteSetting("last_sheet_error", msg);
+        return { ok: false, error: msg };
+      }
+    } catch {
+      /* non-JSON success is ok */
     }
 
     await setSiteSetting("last_sheet_error", "");

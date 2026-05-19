@@ -248,19 +248,11 @@ export function ContactPage() {
               <label htmlFor="role">I&rsquo;m interested as</label>
               <select id="role" name="role" defaultValue="">
                 <option value="">Select one</option>
-                <option value="Carrier - Government Products">
-                  Carrier - Government Products
-                </option>
-                <option value="Carrier - Commercial Products">
-                  Carrier - Commercial Products
-                </option>
-                <option value="Hospital / Provider health system">
-                  Hospital / Provider health system
-                </option>
                 <option value="Independent or field agent">
                   Independent or field agent
                 </option>
                 <option value="Agency or FMO">Agency or FMO</option>
+                <option value="Medicare carrier">Medicare carrier</option>
                 <option value="Other">Other</option>
               </select>
             </div>

@@ -50,7 +50,7 @@ If you see repeated `lockfile missing swc dependencies` warnings, set `NEXT_IGNO
    - `AUTH_SECRET` (`openssl rand -base64 32`)
    - `AUTH_URL=http://localhost:3000`
    - `ADMIN_SEED_EMAIL` / `ADMIN_SEED_PASSWORD` (first admin user)
-   - Optional Gmail vars for contact form email notifications
+   - Contact form: `SMTP_*`, `BOOKCOVER_NOTIFY_EMAIL`, `GOOGLE_APPS_SCRIPT_URL`, `GOOGLE_APPS_SCRIPT_SECRET` (see `.env.example`)
 
 2. Push schema and seed admin:
 

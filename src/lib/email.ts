@@ -1,23 +1,11 @@
-import nodemailer from "nodemailer";
 import type { Lead } from "@/lib/db/schema";
 import { setSiteSetting } from "@/lib/site-settings";
-
-let transporter: nodemailer.Transporter | null = null;
-
-function getTransport() {
-  const user = process.env.GMAIL_USER;
-  const pass = process.env.GMAIL_APP_PASSWORD?.replace(/\s/g, "");
-  if (!user || !pass) return null;
-  if (!transporter) {
-    transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: { user, pass },
-    });
-  }
-  return transporter;
-}
+import {
+  getLeadNotifyEmail,
+  getSmtpFromAddress,
+  getSmtpTransport,
+  isSmtpConfigured,
+} from "@/lib/email/smtp";
 
 function leadHtml(lead: Lead) {
   const rows: [string, string][] = [
@@ -60,19 +48,19 @@ export async function sendPasswordResetEmail(
   to: string,
   resetUrl: string
 ): Promise<boolean> {
-  const fromUser = process.env.GMAIL_USER;
+  const fromUser = getSmtpFromAddress();
   if (!fromUser) {
     await setSiteSetting(
       "last_email_error",
-      "Missing GMAIL_USER for password reset"
+      "Missing SMTP_USER / GMAIL_USER for password reset"
     );
     return false;
   }
-  const transport = getTransport();
+  const transport = getSmtpTransport();
   if (!transport) {
     await setSiteSetting(
       "last_email_error",
-      "Missing GMAIL_USER or GMAIL_APP_PASSWORD for password reset"
+      "Missing SMTP credentials for password reset"
     );
     return false;
   }
@@ -110,20 +98,20 @@ export async function sendPasswordResetEmail(
 }
 
 export async function sendLeadEmails(lead: Lead) {
-  const to = process.env.LEAD_NOTIFICATION_EMAIL;
-  const fromUser = process.env.GMAIL_USER;
-  if (!to || !fromUser) {
+  const to = getLeadNotifyEmail();
+  const fromUser = getSmtpFromAddress();
+  if (!fromUser || !isSmtpConfigured()) {
     await setSiteSetting(
       "last_email_error",
-      "Missing LEAD_NOTIFICATION_EMAIL or GMAIL_USER"
+      "Missing SMTP credentials or notify email"
     );
     return;
   }
-  const transport = getTransport();
+  const transport = getSmtpTransport();
   if (!transport) {
     await setSiteSetting(
       "last_email_error",
-      "Missing GMAIL_USER or GMAIL_APP_PASSWORD"
+      "Missing SMTP credentials"
     );
     return;
   }
