@@ -109,7 +109,7 @@ async function storeLeadInDatabase(
         visitorId: vid,
         sessionId: sid,
         eventType: "form_submit",
-        path: "/contact",
+            path: "/",
         referrer: referrer ?? null,
         utmSource: data.utm_source ?? undefined,
         utmMedium: data.utm_medium ?? undefined,

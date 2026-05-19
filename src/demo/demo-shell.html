@@ -1,0 +1,141 @@
+<div class="shell">
+  <div class="topbar">
+    <div class="logo">BookCover</div>
+    <div class="tb-sep"></div>
+    <div class="tb-label">Member Experience Demo</div>
+    <div class="tb-right">
+      <div class="kb"><span class="k">&#8592;</span><span class="k">&#8594;</span><span style="margin-left:3px">navigate</span></div>
+      <div class="tb-prog"><div class="tb-fill" id="fill"></div></div>
+      <div class="tb-ctr" id="ctr">1 / 17</div>
+    </div>
+  </div>
+  <div class="flow-tabbar">
+    <button class="flow-tab on" id="ftab-0" onclick="switchFlow(0)">
+      <div class="ft-n">0</div><div class="ft-l">BookCover Overview</div>
+      <div class="ft-s">OV-1 &amp; OV-2 &middot; 2 screens</div>
+    </button>
+    <button class="flow-tab" id="ftab-1" onclick="switchFlow(1)">
+      <div class="ft-n">1</div><div class="ft-l">User Registration</div>
+      <div class="ft-s">M001&ndash;M009 &middot; 18 screens</div>
+    </button>
+    <button class="flow-tab" id="ftab-2" onclick="switchFlow(2)">
+      <div class="ft-n">2</div><div class="ft-l">Virtual Assistant</div>
+      <div class="ft-s">M009&ndash;M014 &middot; 8 screens</div>
+    </button>
+    <button class="flow-tab" id="ftab-3" onclick="switchFlow(3)">
+      <div class="ft-n">3</div><div class="ft-l">Plan Analysis</div>
+      <div class="ft-s">PA-1 &amp; PA-2 &middot; 2 screens</div>
+    </button>
+    <button class="flow-tab" id="ftab-4" onclick="switchFlow(4)">
+      <div class="ft-n">4</div><div class="ft-l">Your Feedback</div>
+      <div class="ft-s">FB-01&ndash;FB-05 &middot; 5 screens</div>
+    </button>
+    <button class="flow-tab" id="ftab-5" onclick="switchFlow(5)">
+      <div class="ft-n">5</div><div class="ft-l">My Plan</div>
+      <div class="ft-s">MP-1&ndash;MP-3 &middot; 3 screens</div>
+    </button>
+  </div>
+  <div class="main">
+    <aside class="sidebar">
+      <div class="uc" id="uc"></div>
+      <div class="ph" id="ph"></div>
+      <h2 class="st" id="st"></h2>
+      <div class="ss" id="ss"></div>
+      <div class="sdiv"></div>
+      <p class="sb" id="sb"></p>
+      <ul class="buls" id="buls"></ul>
+      <div class="snote">Tap the primary button on screen, or use arrow keys below.</div>
+    </aside>
+    <div class="device-area">
+      <div class="ipad-col">
+        <div class="ipad" id="ipad">
+          <div class="cam"></div><div class="pwr"></div>
+          <div class="mut"></div><div class="vup"></div><div class="vdn"></div>
+          <div class="pen"></div>
+          <div class="ipad-screen" id="screen"></div>
+        </div>
+      </div>
+
+<div id="info-panel" style="display:none;align-self:stretch;flex:1;overflow-y:auto;flex-direction:column;padding:24px 32px;background:linear-gradient(160deg,#F8FAFC,#EBF2F9)">
+
+  <div style="width:100%;max-width:840px;margin:0 auto">
+
+    <!-- ── HEADER ───────────────────────────────────────────────── -->
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:32px">
+      <div style="width:52px;height:52px;background:#1d9e75;border-radius:14px;flex-shrink:0;
+                  display:flex;align-items:center;justify-content:center;
+                  box-shadow:0 4px 16px rgba(29,158,117,.3)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <div>
+        <div style="font-size:28px;font-weight:900;color:#0F172A;letter-spacing:-.8px;line-height:1">BookCover</div>
+        <div style="font-size:13px;color:#64748B;margin-top:4px">Member Experience Demo &middot; <span style="color:#1d9e75;font-weight:600">cercalabs.com</span></div>
+      </div>
+      <div style="margin-left:auto;background:#1d9e75;color:white;border-radius:10px;
+                  padding:9px 18px;font-size:12px;font-weight:700;letter-spacing:-.1px;
+                  box-shadow:0 4px 12px rgba(29,158,117,.25)">Carrier Presentation</div>
+    </div>
+
+    <!-- ── TWO COLUMNS ──────────────────────────────────────────── -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+
+      <!-- What is BookCover -->
+      <div style="background:white;border-radius:14px;padding:24px;border:1px solid #E2E8F0;
+                  box-shadow:0 2px 12px rgba(0,0,0,.04)">
+        <div style="font-size:11px;font-weight:700;color:#1d9e75;text-transform:uppercase;
+                    letter-spacing:1px;margin-bottom:10px">What is BookCover?</div>
+        <p style="font-size:14px;color:#334155;line-height:1.75;margin-bottom:18px">
+          BookCover is an AI-powered member retention platform built for health plans. It connects directly to your FHIR Patient-Access API to deliver personalized, real-time guidance to each member based on their actual plan data &mdash; claims, formulary, benefits, and deductibles.
+        </p>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:flex-start;gap:11px"><div style="width:28px;height:28px;background:#f5faf6;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;font-size:14px">&#128241;</div><div><div style="font-size:13px;font-weight:700;color:#0F172A;margin-bottom:2px">Member Application</div><div style="font-size:12px;color:#64748B;line-height:1.55">White-labeled mobile website with AI-powered plan guidance &mdash; this demo</div></div></div><div style="display:flex;align-items:flex-start;gap:11px"><div style="width:28px;height:28px;background:#f5faf6;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;font-size:14px">&#128200;</div><div><div style="font-size:13px;font-weight:700;color:#0F172A;margin-bottom:2px">Retention Team Platform</div><div style="font-size:12px;color:#64748B;line-height:1.55">Agent dashboard: risk scores, NBA queue, and campaign management</div></div></div><div style="display:flex;align-items:flex-start;gap:11px"><div style="width:28px;height:28px;background:#f5faf6;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;font-size:14px">&#128101;</div><div><div style="font-size:13px;font-weight:700;color:#0F172A;margin-bottom:2px">Retention Consulting</div><div style="font-size:12px;color:#64748B;line-height:1.55">Embedded team that builds and manages every campaign end-to-end</div></div></div>
+        </div>
+      </div>
+
+      <!-- About this Demo -->
+      <div style="background:white;border-radius:14px;padding:24px;border:1px solid #E2E8F0;
+                  box-shadow:0 2px 12px rgba(0,0,0,.04)">
+        <div style="font-size:11px;font-weight:700;color:#1d9e75;text-transform:uppercase;
+                    letter-spacing:1px;margin-bottom:10px">About this Demo</div>
+        <p style="font-size:14px;color:#334155;line-height:1.75;margin-bottom:18px">
+          This demo shows the <strong style="color:#0F172A">BookCover Member Application</strong> &mdash; the white-labeled mobile website your health plan would offer to members under your own brand. All data is pulled from a simulated FHIR Patient-Access API.
+        </p>
+        <div style="background:#f5faf6;border-radius:10px;padding:12px 14px;margin-bottom:16px;border:0.5px solid #d4ead9">
+          <div style="font-size:11px;color:#94A3B8;margin-bottom:3px">Demo Member</div>
+          <div style="font-size:13px;font-weight:700;color:#0F172A">Margaret Johnson</div>
+          <div style="font-size:12px;color:#64748B;margin-top:2px">Your Health Plan Gold Plus HMO &middot; 2026 Plan Year</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:#F8FAFC;border-radius:8px;border:0.5px solid #E2E8F0"><div style="width:22px;height:22px;background:#1d9e75;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white">1</div><div><span style="font-size:13px;font-weight:700;color:#0F172A">User Registration</span><span style="font-size:11px;color:#64748B;margin-left:6px">Magic Link onboarding &mdash; M001 through M009</span></div></div><div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:#F8FAFC;border-radius:8px;border:0.5px solid #E2E8F0"><div style="width:22px;height:22px;background:#1d9e75;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white">2</div><div><span style="font-size:13px;font-weight:700;color:#0F172A">Virtual Assistant</span><span style="font-size:11px;color:#64748B;margin-left:6px">AI plan Q&amp;A &mdash; M009 through M014</span></div></div><div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:#F8FAFC;border-radius:8px;border:0.5px solid #E2E8F0"><div style="width:22px;height:22px;background:#1d9e75;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white">3</div><div><span style="font-size:13px;font-weight:700;color:#0F172A">Plan Analysis</span><span style="font-size:11px;color:#64748B;margin-left:6px">Pre-ANOC cost comparison &mdash; PA-1 &amp; PA-2</span></div></div><div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:#F8FAFC;border-radius:8px;border:0.5px solid #E2E8F0"><div style="width:22px;height:22px;background:#1d9e75;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white">4</div><div><span style="font-size:13px;font-weight:700;color:#0F172A">Your Feedback</span><span style="font-size:11px;color:#64748B;margin-left:6px">Surveys &amp; member feedback &mdash; FB-01 through FB-05</span></div></div><div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:#F8FAFC;border-radius:8px;border:0.5px solid #E2E8F0"><div style="width:22px;height:22px;background:#1d9e75;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white">5</div><div><span style="font-size:13px;font-weight:700;color:#0F172A">My Plan</span><span style="font-size:11px;color:#64748B;margin-left:6px">FHIR plan data, care team &amp; Rx &mdash; MP-1 through MP-3</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── HOW TO USE ───────────────────────────────────────────── -->
+    <div style="background:white;border-radius:14px;padding:22px 28px;border:1px solid #E2E8F0;
+                box-shadow:0 2px 12px rgba(0,0,0,.04)">
+      <div style="font-size:11px;font-weight:700;color:#1d9e75;text-transform:uppercase;
+                  letter-spacing:1px;margin-bottom:14px">How to Use this Demo</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+        <div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:13px;font-weight:700;color:#0F172A;margin-bottom:2px">Switch Flows</div><div style="font-size:12px;color:#64748B;line-height:1.6">Click a numbered tab above the screen to jump between demo flows (Registration, Assistant, etc.)</div></div><div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:13px;font-weight:700;color:#0F172A;margin-bottom:2px">Navigate Screens</div><div style="font-size:12px;color:#64748B;line-height:1.6">Press <span style="display:inline-flex;align-items:center;justify-content:center;background:white;border:1px solid #E2E8F0;border-radius:5px;padding:3px 10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#334155;box-shadow:0 1px 3px rgba(0,0,0,.08);margin:0 2px">&#8592;</span> <span style="display:inline-flex;align-items:center;justify-content:center;background:white;border:1px solid #E2E8F0;border-radius:5px;padding:3px 10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#334155;box-shadow:0 1px 3px rgba(0,0,0,.08);margin:0 2px">&#8594;</span> arrow keys, or use the <strong style="color:#334155">Previous</strong> and <strong style="color:#334155">Next</strong> buttons at the bottom.</div></div><div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:13px;font-weight:700;color:#0F172A;margin-bottom:2px">Jump to Any Screen</div><div style="font-size:12px;color:#64748B;line-height:1.6">Click any dot &bull; in the bottom control bar to jump directly to that screen within the current flow.</div></div><div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:13px;font-weight:700;color:#0F172A;margin-bottom:2px">Presenter Sidebar</div><div style="font-size:12px;color:#64748B;line-height:1.6">The left sidebar shows the screen ID, phase label, title, and talking-point bullets for each mockup.</div></div>
+      </div>
+    </div>
+
+    <!-- ── FOOTER ───────────────────────────────────────────────── -->
+    <div style="margin-top:16px;display:flex;align-items:center;justify-content:space-between">
+      <div style="font-size:11px;color:#94A3B8">&#169; CercaLabs &middot; HIPAA-aligned &middot; SOC 2 Type II &middot; FHIR R4 Patient-Access API</div>
+      <div style="font-size:11px;color:#94A3B8">No custom integration required &middot; Magic Link onboarding in under 60 seconds</div>
+    </div>
+
+  </div>
+</div>
+    </div>
+  </div>
+  <div class="controls">
+    <button class="nbtn" id="prev" onclick="nav(-1)">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Previous
+    </button>
+    <div class="dots" id="dots"></div>
+    <button class="nbtn primary" id="next" onclick="nav(1)">
+      Next<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</div>
