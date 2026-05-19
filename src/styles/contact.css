@@ -1,0 +1,339 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --pale: #e5f2fb;
+  --navy: #003087;
+  --pine: #1a4a8a;
+  --blue: #0070b9;
+  --blue-h: #005a9c;
+  --blue-lt: #cbe8f6;
+  --gold: #c08020;
+  --gold-l: #f5c158;
+  --white: #ffffff;
+  --ice: #eef6fb;
+  --steel: #2a4a6e;
+  --muted: #6a8daa;
+  --border: #a8cce4;
+  --border-m: #c2dcf0;
+  --shadow: rgba(0, 48, 135, 0.08);
+  --red: #b83232;
+  --red-lt: #fdecea;
+  --green: #1a7a4a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  background: var(--pale);
+  color: var(--navy);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+body.interest-no-scroll {
+  overflow: hidden;
+}
+
+/* ── PAGE WRAP ── */
+.interest-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--ice) 0%, var(--pale) 60%);
+  padding: 48px 24px 64px;
+  display: flex;
+  justify-content: center;
+}
+
+.interest-wrap {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+@media (max-width: 560px) {
+  .interest-page {
+    padding: 28px 16px 56px;
+  }
+}
+
+/* ── BACK LINK ── */
+.interest-back {
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--blue);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  transition: color 0.15s ease;
+}
+
+.interest-back:hover {
+  color: var(--blue-h);
+}
+
+/* ── CARD ── */
+.interest-card {
+  background: var(--white);
+  border: 1px solid var(--border-m);
+  border-radius: 18px;
+  padding: 40px 36px;
+  box-shadow: 0 14px 40px var(--shadow);
+}
+
+@media (max-width: 560px) {
+  .interest-card {
+    padding: 28px 22px;
+    border-radius: 14px;
+  }
+}
+
+.interest-card h1 {
+  font-family: "Nunito", sans-serif;
+  font-size: clamp(24px, 3vw, 30px);
+  font-weight: 900;
+  color: var(--navy);
+  letter-spacing: -0.4px;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.interest-card .sub {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--steel);
+  margin-bottom: 28px;
+}
+
+/* ── FIELDS ── */
+.interest-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.interest-field label {
+  font-family: "Nunito", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--steel);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.interest-field label .req {
+  color: var(--blue);
+  margin-left: 2px;
+  text-transform: none;
+}
+
+.interest-field input[type="text"],
+.interest-field input[type="email"],
+.interest-field input[type="tel"],
+.interest-field select,
+.interest-field textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  color: var(--navy);
+  background: white;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.interest-field input:focus,
+.interest-field select:focus,
+.interest-field textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0, 112, 185, 0.12);
+}
+
+.interest-field textarea {
+  resize: vertical;
+  min-height: 110px;
+  line-height: 1.6;
+}
+
+.interest-field select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236A8DAA' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.interest-field select option {
+  color: var(--navy);
+}
+
+/* ── SUBMIT ── */
+.interest-submit {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px 24px;
+  background: var(--blue);
+  color: white;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.12s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.interest-submit:hover:not(:disabled) {
+  background: var(--blue-h);
+  transform: translateY(-1px);
+}
+
+.interest-submit:disabled {
+  background: var(--muted);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── LOADING OVERLAY ── */
+.interest-loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 48, 135, 0.55);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.interest-loading-overlay[hidden] {
+  display: none;
+}
+
+.interest-loading-inner {
+  background: white;
+  border-radius: 14px;
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 18px 50px rgba(0, 48, 135, 0.25);
+}
+
+.interest-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border-m);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: interest-spin 0.8s linear infinite;
+}
+
+.interest-loading-text {
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: 0.3px;
+}
+
+@keyframes interest-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── MODAL ── */
+.interest-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 48, 135, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  padding: 24px;
+}
+
+.interest-modal-backdrop[hidden] {
+  display: none;
+}
+
+.interest-modal {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 14px;
+  padding: 28px 28px 24px;
+  border: 1px solid var(--border-m);
+  box-shadow: 0 24px 60px rgba(0, 48, 135, 0.3);
+  text-align: center;
+}
+
+.interest-modal-title {
+  font-family: "Nunito", sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--navy);
+  margin-bottom: 10px;
+  letter-spacing: -0.2px;
+}
+
+.interest-modal-body {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--steel);
+  margin-bottom: 14px;
+}
+
+.interest-modal-redirect {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+  letter-spacing: 0.3px;
+}
+
+.interest-modal-dismiss {
+  margin-top: 4px;
+  padding: 10px 22px;
+  background: var(--blue);
+  color: white;
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.interest-modal-dismiss:hover {
+  background: var(--blue-h);
+}
+
+.interest-modal-backdrop.is-error .interest-modal-title {
+  color: var(--red);
+}
