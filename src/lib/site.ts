@@ -1,7 +1,7 @@
 export const SITE = {
   name: "BookCover",
-  tagline: "Member Experience Demo",
-  title: "BookCover — Member Experience Demo",
+  tagline: "Agent Portal Demo",
+  title: "BookCover · Agent Portal Demo",
   description:
-    "Interactive demo of the BookCover member application: registration, virtual assistant, plan analysis, feedback, and my plan.",
+    "Interactive agent portal demo with autorun tour: dashboard, at-risk members, campaigns, reporting, and surveys.",
 } as const;

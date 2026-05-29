@@ -2,31 +2,34 @@
 
 import { useEffect, useRef } from "react";
 
+function initDemo() {
+  if (typeof window.switchToOverview === "function") {
+    window.switchToOverview();
+  } else if (typeof window.render === "function") {
+    window.render(0, 1);
+  }
+}
+
 /**
- * Loads the BookCover Member Experience Demo shell + runtime from /public.
- * Logic and screen HTML live in demo-runtime.js (from the interactive mockup).
+ * Loads the BookCover Agent Portal demo shell + runtime from /public.
+ * Includes autorun tour UI and controls from BookCover_Admin_Demo_v73_3.html.
  */
 export function MemberDemo() {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-
     let cancelled = false;
 
     async function mount() {
       const res = await fetch("/demo-shell.html");
       if (!res.ok || cancelled) return;
-      const html = await res.text();
+      const shellHtml = await res.text();
       if (cancelled || !rootRef.current) return;
 
-      rootRef.current.innerHTML = html;
+      rootRef.current.innerHTML = shellHtml;
 
       if (document.querySelector('script[data-demo-runtime="1"]')) {
-        if (typeof window.render === "function") {
-          window.render(0, 1);
-        }
+        initDemo();
         return;
       }
 
@@ -39,6 +42,8 @@ export function MemberDemo() {
         script.onerror = () => reject(new Error("Failed to load demo runtime"));
         document.body.appendChild(script);
       });
+
+      if (!cancelled) initDemo();
     }
 
     mount().catch((err) => {
@@ -50,5 +55,11 @@ export function MemberDemo() {
     };
   }, []);
 
-  return <div ref={rootRef} id="bookcover-demo-root" />;
+  return (
+    <div
+      ref={rootRef}
+      id="bookcover-demo-root"
+      style={{ width: "100%", height: "100%" }}
+    />
+  );
 }
