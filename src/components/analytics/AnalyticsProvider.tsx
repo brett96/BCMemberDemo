@@ -8,6 +8,7 @@ import {
   useRef,
 } from "react";
 import { usePathname } from "next/navigation";
+import { forwardToCentralTrack } from "@/lib/central-track";
 
 const VID = "bc_vid";
 const SID = "bc_sid";
@@ -83,6 +84,7 @@ function sendBeacon(payload: unknown) {
       keepalive: true,
     });
   }
+  forwardToCentralTrack("member", payload as Record<string, unknown>);
 }
 
 export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
