@@ -1,21 +1,21 @@
-# BookCover Agent Portal Demo + Admin
+# BookCover Member Portal Demo + Admin
 
-Next.js app: **interactive agent portal demo** with **Autorun tour** (from `BookCover_Admin_Demo_v73_3.html`) at `/`, plus password-protected admin analytics.
+Next.js app: **interactive member portal demo** (from `BookCover_Interactive_Demo_21 - MEMBER.html`) at `/`, plus password-protected admin analytics.
 
 ## Stack
 
 - **Next.js 16** (App Router)
-- **Public demo**: Agent portal mockups, grouped workflow tabs, autorun self-guided tour
+- **Public demo**: Member mobile experience — registration, virtual assistant, plan analysis, feedback, My Plan
 - **Admin**: Tailwind v4 + shadcn-style UI, Recharts
 - **Database**: Neon / Vercel Postgres + Drizzle ORM
-- **Auth**: Auth.js v5 (credentials, JWT)
+- **Auth**: Auth.js v5 (credentials, JWT) for `/admin`; landing-issued `__bc_demo_jwt` for `/`
 - **Analytics**: Custom `events` table + `/api/track`
 
 ## Routes
 
 | Path | Description |
 |------|-------------|
-| `/` | Agent Portal Demo (manual + Autorun tour) |
+| `/` | Member Portal Demo (iPad mockup + flow tabs) |
 | `/login` | Admin sign-in |
 | `/admin` | Analytics overview dashboard |
 | `/admin/leads` | Lead management |
@@ -26,15 +26,15 @@ Next.js app: **interactive agent portal demo** with **Autorun tour** (from `Book
 
 ## Updating the demo from the mockup
 
-When `BookCover_Admin_Demo_v73_3.html` changes at the repo parent folder:
+When `BookCover_Interactive_Demo_21 - MEMBER.html` changes at the repo parent folder:
 
 ```bash
 npm run sync:demo
 ```
 
-This refreshes `public/demo-shell.html`, `public/demo-runtime.js`, `src/styles/demo.css`, and `public/bookcover-agent-demo.html`.
+This refreshes `public/demo-shell.html`, `public/demo-runtime.js`, `src/styles/demo.css`, and `public/bookcover-member-demo.html`.
 
-Standalone copy (open directly in a browser): `/bookcover-agent-demo.html`
+Standalone copy (open directly in a browser): `/bookcover-member-demo.html`
 
 ## Local development
 
@@ -50,25 +50,25 @@ npm run seed:admin
 
 3. `npm run dev` → http://localhost:3000 (demo), http://localhost:3000/login (admin).
 
-Click **Click to Autorun** (top right) for the self-guided tour.
-
 ## Deploy on Vercel
 
-Import the repo with **Root Directory** empty (`.`). On GitHub this app is the repo root; locally it lives in `BCMemberDemo/web/`.
+Import the repo with **Root Directory** = `web` (or repo root if configured). Custom domain: `bcmemberdemo.cercalabs.com`.
+
+Set `DEMO_JWT_SECRET` (same as landing), `NEXT_PUBLIC_LANDING_URL`, and `NEXT_PUBLIC_DEMO_URL`.
 
 ## Project structure
 
 ```
 src/
 ├── app/
-│   ├── (marketing)/     # Demo home + analytics
+│   ├── (marketing)/     # Member demo home + analytics
 │   ├── admin/           # Dashboard (protected)
 │   ├── (auth)/          # login, reset-password
 │   └── api/
 ├── components/demo/     # MemberDemo loader
 ├── styles/demo.css
 public/
-├── demo-shell.html      # Shell + autorun UI markup
-├── demo-runtime.js      # Demo logic + autorun engine
-└── bookcover-agent-demo.html
+├── demo-shell.html
+├── demo-runtime.js
+└── bookcover-member-demo.html
 ```

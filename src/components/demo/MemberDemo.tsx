@@ -3,16 +3,16 @@
 import { useEffect, useRef } from "react";
 
 function initDemo() {
-  if (typeof window.switchToOverview === "function") {
-    window.switchToOverview();
+  if (typeof window.switchFlow === "function") {
+    window.switchFlow(0);
   } else if (typeof window.render === "function") {
     window.render(0, 1);
   }
 }
 
 /**
- * Loads the BookCover Agent Portal demo shell + runtime from /public.
- * Includes autorun tour UI and controls from BookCover_Admin_Demo_v73_3.html.
+ * Loads the BookCover Member Portal demo shell + runtime from /public.
+ * Source: BookCover_Interactive_Demo_21 - MEMBER.html (npm run sync:demo).
  */
 export function MemberDemo() {
   const rootRef = useRef<HTMLDivElement>(null);

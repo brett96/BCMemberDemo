@@ -1,5 +1,5 @@
 /**
- * Sync BookCover_Admin_Demo_v73_3.html into public demo assets.
+ * Sync BookCover_Interactive_Demo_21 - MEMBER.html into public demo assets.
  * Run from web/: npm run sync:demo
  */
 import fs from "node:fs";
@@ -11,7 +11,7 @@ const webRoot = path.resolve(__dirname, "..");
 const mockupPath = path.resolve(
   webRoot,
   "..",
-  "BookCover_Admin_Demo_v73_3.html"
+  "BookCover_Interactive_Demo_21 - MEMBER.html"
 );
 
 if (!fs.existsSync(mockupPath)) {
@@ -21,13 +21,16 @@ if (!fs.existsSync(mockupPath)) {
 
 const html = fs.readFileSync(mockupPath, "utf8");
 
+const headEnd = html.indexOf("</head>");
+const headHtml = headEnd === -1 ? html : html.slice(0, headEnd);
+
 const styles = [];
 let pos = 0;
 while (true) {
-  const start = html.indexOf("<style>", pos);
+  const start = headHtml.indexOf("<style>", pos);
   if (start === -1) break;
-  const end = html.indexOf("</style>", start);
-  styles.push(html.slice(start + 7, end).trim());
+  const end = headHtml.indexOf("</style>", start);
+  styles.push(headHtml.slice(start + 7, end).trim());
   pos = end + 8;
 }
 
@@ -68,9 +71,9 @@ fs.writeFileSync(
 );
 fs.copyFileSync(
   mockupPath,
-  path.join(webRoot, "public/bookcover-agent-demo.html")
+  path.join(webRoot, "public/bookcover-member-demo.html")
 );
 
 console.log(
-  `Synced agent demo: ${styles.length} style blocks, ${htmlParts.length} HTML chunks, ${scriptParts.length} script blocks.`
+  `Synced member demo: ${styles.length} style blocks, ${htmlParts.length} HTML chunks, ${scriptParts.length} script blocks.`
 );
