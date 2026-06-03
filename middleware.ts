@@ -26,27 +26,21 @@ function demoReturnUrl(req: NextRequest): string {
 
 function redirectToLanding(req: NextRequest) {
   const landing = new URL(LANDING_URL);
+  // Misconfigured env (LANDING_URL = this site) causes ERR_TOO_MANY_REDIRECTS.
+  if (landing.hostname === req.nextUrl.hostname) {
+    return new NextResponse(
+      "Demo gate misconfiguration: set NEXT_PUBLIC_LANDING_URL to https://bookcover.cercalabs.com on this Vercel project (not the member demo URL).",
+      { status: 503, headers: { "Content-Type": "text/plain; charset=utf-8" } }
+    );
+  }
   landing.searchParams.set("login", "1");
   landing.searchParams.set("return", demoReturnUrl(req));
+  landing.searchParams.set("gate_bounce", "1");
   return NextResponse.redirect(landing);
-}
-
-function redirectToCanonicalDemo(req: NextRequest) {
-  if (!DEMO_URL) return null;
-  const canonical = new URL(DEMO_URL);
-  if (req.nextUrl.hostname === canonical.hostname) return null;
-  const target = new URL(
-    req.nextUrl.pathname + req.nextUrl.search,
-    DEMO_URL + "/"
-  );
-  return NextResponse.redirect(target);
 }
 
 export default auth(async (req) => {
   const path = req.nextUrl.pathname;
-
-  const canonical = redirectToCanonicalDemo(req);
-  if (canonical) return canonical;
 
   if (path.startsWith("/admin")) {
     if (!req.auth) {
@@ -64,6 +58,7 @@ export default auth(async (req) => {
     if (!session) {
       return redirectToLanding(req);
     }
+    return NextResponse.next();
   }
 });
 
