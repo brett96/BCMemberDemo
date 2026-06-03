@@ -3,11 +3,6 @@ import type { NextRequest } from "next/server";
 import NextAuth from "next-auth";
 import { authConfig } from "@/auth.config";
 import { verifyDemoJwt, DEMO_JWT_COOKIE } from "@/lib/demo-jwt";
-import {
-  DEMO_HANDOFF_PARAM,
-  demoJwtCookieOptions,
-} from "@/lib/demo-cookie";
-
 const LANDING_URL =
   process.env.NEXT_PUBLIC_LANDING_URL ?? "https://bookcover.cercalabs.com";
 
@@ -56,21 +51,6 @@ export default auth(async (req) => {
   }
 
   if (path === "/") {
-    const handoff = req.nextUrl.searchParams.get(DEMO_HANDOFF_PARAM);
-    if (handoff) {
-      const fromHandoff = await verifyDemoJwt(handoff);
-      if (fromHandoff) {
-        const clean = req.nextUrl.clone();
-        clean.searchParams.delete(DEMO_HANDOFF_PARAM);
-        const res = NextResponse.redirect(clean);
-        res.cookies.set({
-          ...demoJwtCookieOptions(req.nextUrl.hostname),
-          value: handoff,
-        });
-        return res;
-      }
-    }
-
     const session = await verifyDemoJwt(
       req.cookies.get(DEMO_JWT_COOKIE)?.value
     );
