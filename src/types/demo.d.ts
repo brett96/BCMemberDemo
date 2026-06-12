@@ -2,6 +2,8 @@ export {};
 
 declare global {
   interface Window {
+    __bcInitDemo?: () => void;
+    __bcResumeDemo?: () => void;
     render?: (idx: number, dir: number) => void;
     nav?: (dir: number) => void;
     switchFlow?: (n: number) => void;

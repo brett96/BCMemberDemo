@@ -32,6 +32,7 @@ const FLOWS=[
 ];
 
 let activeFlow=0,cur=0,busy=false;
+let __bcRenderToken=0;
 const vis=[new Set([0]),new Set([0]),new Set([0]),new Set([0]),new Set([0]),new Set([0])];
 
 function switchFlow(n){
@@ -97,7 +98,9 @@ function mailChrome(){
 const homeBar='<div class="hbar"><div class="hpill"></div></div>';
 
 function render(idx,dir){
-  if(busy)return; busy=true;
+  if(busy)return;
+  if(!document.getElementById('uc'))return;
+  busy=true;
   const F=FLOWS[activeFlow];
   const s=F.screens[idx],html=F.html[idx],url=F.urls[s.id];
   const isEmail=s.frame==='email',isBrowser=s.frame==='browser';
@@ -133,14 +136,18 @@ function render(idx,dir){
   }
 
   const scr=document.getElementById('screen');
-  scr.style.cssText='transition:opacity .18s ease,transform .18s ease;opacity:0;transform:translateY('+(dir>0?'-7':'7')+'px)';
+  if(!scr){busy=false;return;}
+  scr.style.cssText='transition:opacity .18s ease,transform .18s ease;opacity:0;transform:translateY('+(dir>0?'-7':'7')+'px');
+  const __rt=++__bcRenderToken;
   setTimeout(()=>{
+    if(__rt!==__bcRenderToken)return;
     scr.innerHTML=inner;
     attachListeners(idx);
     scr.style.cssText='transition:none;opacity:0;transform:translateY('+(dir>0?'7':'-7')+'px)';
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      if(__rt!==__bcRenderToken)return;
       scr.style.cssText='transition:opacity .24s ease,transform .24s ease;opacity:1;transform:translateY(0)';
-      setTimeout(()=>{busy=false;},240);
+      setTimeout(()=>{if(__rt===__bcRenderToken)busy=false;},240);
     }));
   },170);
 }
@@ -180,3 +187,53 @@ document.addEventListener('keydown',e=>{
 })();
 
 render(0,1);
+
+// BookCover demo lifecycle — Next.js embed: remounts, bfcache, and stale render timers.
+
+function __bcResetDemoState() {
+  busy = false;
+  __bcRenderToken++;
+}
+
+function __bcResumeDemo() {
+  if (!document.getElementById("screen")) return;
+  const flow = activeFlow;
+  const idx = cur;
+  __bcResetDemoState();
+  const scr = document.getElementById("screen");
+  if (scr) scr.style.cssText = "opacity:1;transform:none";
+  render(idx, 1);
+  if (flow === 0) {
+    const ip = document.getElementById("info-panel");
+    const ic = document.querySelector(".ipad-col");
+    if (ip) ip.style.display = "flex";
+    if (ic) ic.style.display = "none";
+  }
+}
+
+function __bcInitDemo() {
+  __bcResetDemoState();
+  activeFlow = -1;
+  cur = 0;
+  switchFlow(0);
+}
+
+window.__bcInitDemo = __bcInitDemo;
+window.__bcResumeDemo = __bcResumeDemo;
+
+window.addEventListener("pageshow", (event) => {
+  if (!event.persisted || !document.getElementById("screen")) return;
+  if (activeFlow === 0) {
+    if (busy) __bcResetDemoState();
+    return;
+  }
+  const scr = document.getElementById("screen");
+  const opacity = scr ? parseFloat(getComputedStyle(scr).opacity || "1") : 1;
+  if (busy || opacity < 0.5) __bcResumeDemo();
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState !== "visible") return;
+  if (!document.getElementById("screen") || !busy) return;
+  __bcResumeDemo();
+});

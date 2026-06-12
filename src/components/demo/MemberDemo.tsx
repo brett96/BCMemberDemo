@@ -24,6 +24,10 @@ function enhanceMobileLayout(root: HTMLElement) {
 }
 
 function initDemo() {
+  if (typeof window.__bcInitDemo === "function") {
+    window.__bcInitDemo();
+    return;
+  }
   if (typeof window.switchFlow === "function") {
     window.switchFlow(0);
   } else if (typeof window.render === "function") {

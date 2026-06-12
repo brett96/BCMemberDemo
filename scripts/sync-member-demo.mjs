@@ -8,6 +8,57 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const webRoot = path.resolve(__dirname, "..");
+
+function applyDemoRuntimePatches(source) {
+  let out = source;
+
+  if (!out.includes("__bcRenderToken")) {
+    out = out.replace(
+      "let activeFlow=0,cur=0,busy=false;",
+      "let activeFlow=0,cur=0,busy=false;\nlet __bcRenderToken=0;"
+    );
+    out = out.replace(
+      "function render(idx,dir){\n  if(busy)return; busy=true;",
+      "function render(idx,dir){\n  if(busy)return;\n  if(!document.getElementById('uc'))return;\n  busy=true;"
+    );
+    out = out.replace(
+      `  const scr=document.getElementById('screen');
+  scr.style.cssText='transition:opacity .18s ease,transform .18s ease;opacity:0;transform:translateY('+(dir>0?'-7':'7')+'px');
+  setTimeout(()=>{
+    scr.innerHTML=inner;
+    attachListeners(idx);
+    scr.style.cssText='transition:none;opacity:0;transform:translateY('+(dir>0?'7':'-7')+'px)';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      scr.style.cssText='transition:opacity .24s ease,transform .24s ease;opacity:1;transform:translateY(0)';
+      setTimeout(()=>{busy=false;},240);
+    }));
+  },170);`,
+      `  const scr=document.getElementById('screen');
+  if(!scr){busy=false;return;}
+  scr.style.cssText='transition:opacity .18s ease,transform .18s ease;opacity:0;transform:translateY('+(dir>0?'-7':'7')+'px');
+  const __rt=++__bcRenderToken;
+  setTimeout(()=>{
+    if(__rt!==__bcRenderToken)return;
+    scr.innerHTML=inner;
+    attachListeners(idx);
+    scr.style.cssText='transition:none;opacity:0;transform:translateY('+(dir>0?'7':'-7')+'px)';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      if(__rt!==__bcRenderToken)return;
+      scr.style.cssText='transition:opacity .24s ease,transform .24s ease;opacity:1;transform:translateY(0)';
+      setTimeout(()=>{if(__rt===__bcRenderToken)busy=false;},240);
+    }));
+  },170);`
+    );
+  }
+
+  if (!out.includes("__bcInitDemo")) {
+    const lifecyclePath = path.join(__dirname, "demo-runtime-lifecycle.js");
+    out = `${out}\n\n${fs.readFileSync(lifecyclePath, "utf8")}`;
+  }
+
+  return out;
+}
+
 const mockupPath = path.resolve(
   webRoot,
   "..",
@@ -67,7 +118,7 @@ fs.writeFileSync(
 );
 fs.writeFileSync(
   path.join(webRoot, "public/demo-runtime.js"),
-  scriptParts.join("\n\n")
+  applyDemoRuntimePatches(scriptParts.join("\n\n"))
 );
 fs.copyFileSync(
   mockupPath,
