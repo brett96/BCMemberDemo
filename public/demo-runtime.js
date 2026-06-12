@@ -137,7 +137,7 @@ function render(idx,dir){
 
   const scr=document.getElementById('screen');
   if(!scr){busy=false;return;}
-  scr.style.cssText='transition:opacity .18s ease,transform .18s ease;opacity:0;transform:translateY('+(dir>0?'-7':'7')+'px');
+  scr.style.cssText='transition:opacity .18s ease,transform .18s ease;opacity:0;transform:translateY('+(dir>0?'-7':'7')+'px)';
   const __rt=++__bcRenderToken;
   setTimeout(()=>{
     if(__rt!==__bcRenderToken)return;

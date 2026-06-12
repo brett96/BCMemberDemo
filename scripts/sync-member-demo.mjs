@@ -23,7 +23,7 @@ function applyDemoRuntimePatches(source) {
     );
     out = out.replace(
       `  const scr=document.getElementById('screen');
-  scr.style.cssText='transition:opacity .18s ease,transform .18s ease;opacity:0;transform:translateY('+(dir>0?'-7':'7')+'px');
+  scr.style.cssText='transition:opacity .18s ease,transform .18s ease;opacity:0;transform:translateY('+(dir>0?'-7':'7')+'px)';
   setTimeout(()=>{
     scr.innerHTML=inner;
     attachListeners(idx);
@@ -35,7 +35,7 @@ function applyDemoRuntimePatches(source) {
   },170);`,
       `  const scr=document.getElementById('screen');
   if(!scr){busy=false;return;}
-  scr.style.cssText='transition:opacity .18s ease,transform .18s ease;opacity:0;transform:translateY('+(dir>0?'-7':'7')+'px');
+  scr.style.cssText='transition:opacity .18s ease,transform .18s ease;opacity:0;transform:translateY('+(dir>0?'-7':'7')+'px)';
   const __rt=++__bcRenderToken;
   setTimeout(()=>{
     if(__rt!==__bcRenderToken)return;
@@ -55,6 +55,12 @@ function applyDemoRuntimePatches(source) {
     const lifecyclePath = path.join(__dirname, "demo-runtime-lifecycle.js");
     out = `${out}\n\n${fs.readFileSync(lifecyclePath, "utf8")}`;
   }
+
+  // Guard against a known bad patch that drops the closing quote before ");"
+  out = out.replaceAll(
+    "translateY('+(dir>0?'-7':'7')+'px');",
+    "translateY('+(dir>0?'-7':'7')+'px)';"
+  );
 
   return out;
 }

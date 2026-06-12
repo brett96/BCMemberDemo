@@ -1,6 +1,9 @@
-const CENTRAL_TRACK_URL =
-  (process.env.NEXT_PUBLIC_LANDING_URL ?? "https://bookcover.cercalabs.com") +
-  "/api/track";
+function landingTrackUrl(): string {
+  const base = (
+    process.env.NEXT_PUBLIC_LANDING_URL ?? "https://bookcover.cercalabs.com"
+  ).replace(/\/+$/, "");
+  return `${base}/api/track`;
+}
 
 export function forwardToCentralTrack(
   site: "member" | "agent",
@@ -8,7 +11,7 @@ export function forwardToCentralTrack(
 ): void {
   if (typeof window === "undefined") return;
   const body = JSON.stringify({ site, ...payload });
-  const url = CENTRAL_TRACK_URL;
+  const url = landingTrackUrl();
   if (navigator.sendBeacon) {
     navigator.sendBeacon(url, new Blob([body], { type: "application/json" }));
   } else {

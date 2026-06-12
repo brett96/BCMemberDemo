@@ -39,6 +39,12 @@ async function ensureDemoRuntime(): Promise<void> {
   await waitForDemoRuntime();
 }
 
+function stripInlineHandlers(root: HTMLElement) {
+  root.querySelectorAll("[onclick]").forEach((el) => {
+    el.removeAttribute("onclick");
+  });
+}
+
 function bindDemoControls(root: HTMLElement, signal: AbortSignal) {
   root.addEventListener(
     "click",
@@ -122,6 +128,7 @@ export function MemberDemo() {
       if (cancelled || !rootRef.current) return;
 
       rootRef.current.innerHTML = shellHtml;
+      stripInlineHandlers(rootRef.current);
       enhanceMobileLayout(rootRef.current);
       bindDemoControls(rootRef.current, controller.signal);
 
