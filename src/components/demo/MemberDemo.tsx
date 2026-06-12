@@ -2,6 +2,79 @@
 
 import { useEffect, useRef } from "react";
 
+function waitForDemoRuntime(timeoutMs = 15000): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const start = Date.now();
+    const tick = () => {
+      if (typeof window.__bcInitDemo === "function") {
+        resolve();
+        return;
+      }
+      if (Date.now() - start > timeoutMs) {
+        reject(new Error("Demo runtime failed to load"));
+        return;
+      }
+      window.setTimeout(tick, 25);
+    };
+    tick();
+  });
+}
+
+async function ensureDemoRuntime(): Promise<void> {
+  if (typeof window.__bcInitDemo === "function") return;
+
+  const existing = document.querySelector('script[data-demo-runtime="1"]');
+  if (!existing) {
+    await new Promise<void>((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "/demo-runtime.js";
+      script.async = false;
+      script.dataset.demoRuntime = "1";
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error("Failed to load demo runtime"));
+      document.body.appendChild(script);
+    });
+  }
+
+  await waitForDemoRuntime();
+}
+
+function bindDemoControls(root: HTMLElement, signal: AbortSignal) {
+  root.addEventListener(
+    "click",
+    (event) => {
+      const target = event.target as Element;
+
+      if (target.closest("#prev")) {
+        event.preventDefault();
+        window.nav?.(-1);
+        return;
+      }
+
+      if (target.closest("#next")) {
+        event.preventDefault();
+        window.nav?.(1);
+        return;
+      }
+
+      const tab = target.closest(".flow-tab");
+      if (tab) {
+        const match = tab.id.match(/^ftab-(\d+)$/);
+        if (match) window.switchFlow?.(Number(match[1]));
+        return;
+      }
+
+      const dot = target.closest(".dot");
+      if (dot) {
+        const dots = root.querySelectorAll("#dots .dot");
+        const idx = Array.from(dots).indexOf(dot);
+        if (idx >= 0) window.jump?.(idx);
+      }
+    },
+    { signal }
+  );
+}
+
 function enhanceMobileLayout(root: HTMLElement) {
   if (!window.matchMedia("(max-width: 900px)").matches) return;
 
@@ -28,11 +101,7 @@ function initDemo() {
     window.__bcInitDemo();
     return;
   }
-  if (typeof window.switchFlow === "function") {
-    window.switchFlow(0);
-  } else if (typeof window.render === "function") {
-    window.render(0, 1);
-  }
+  window.switchFlow?.(0);
 }
 
 /**
@@ -44,6 +113,7 @@ export function MemberDemo() {
 
   useEffect(() => {
     let cancelled = false;
+    const controller = new AbortController();
 
     async function mount() {
       const res = await fetch("/demo-shell.html");
@@ -53,22 +123,9 @@ export function MemberDemo() {
 
       rootRef.current.innerHTML = shellHtml;
       enhanceMobileLayout(rootRef.current);
+      bindDemoControls(rootRef.current, controller.signal);
 
-      if (document.querySelector('script[data-demo-runtime="1"]')) {
-        initDemo();
-        return;
-      }
-
-      await new Promise<void>((resolve, reject) => {
-        const script = document.createElement("script");
-        script.src = "/demo-runtime.js";
-        script.async = false;
-        script.dataset.demoRuntime = "1";
-        script.onload = () => resolve();
-        script.onerror = () => reject(new Error("Failed to load demo runtime"));
-        document.body.appendChild(script);
-      });
-
+      await ensureDemoRuntime();
       if (!cancelled) initDemo();
     }
 
@@ -78,14 +135,9 @@ export function MemberDemo() {
 
     return () => {
       cancelled = true;
+      controller.abort();
     };
   }, []);
 
-  return (
-    <div
-      ref={rootRef}
-      id="bookcover-demo-root"
-      style={{ width: "100%", height: "100%" }}
-    />
-  );
+  return <div ref={rootRef} id="bookcover-demo-root" className="demo-root" />;
 }

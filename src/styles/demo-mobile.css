@@ -3,6 +3,11 @@
  * Kept separate from demo.css so npm run sync:demo does not overwrite it.
  */
 
+.demo-root {
+  width: 100%;
+  height: 100%;
+}
+
 @media (max-width: 900px) {
   html,
   body {
@@ -11,9 +16,10 @@
     min-height: 100dvh;
   }
 
+  .demo-root,
   #bookcover-demo-root {
     min-height: 100dvh;
-    height: auto;
+    height: auto !important;
   }
 
   #bookcover-demo-root .shell {
@@ -21,6 +27,13 @@
     min-height: 100dvh;
     height: auto;
     overflow: visible;
+  }
+
+  #bookcover-demo-root .main {
+    flex: 1 1 auto;
+    flex-direction: column;
+    overflow: visible;
+    min-height: 0;
   }
 
   /* ── Top bar ── */
@@ -99,13 +112,6 @@
     white-space: nowrap;
   }
 
-  /* ── Main: stack device above sidebar ── */
-  #bookcover-demo-root .main {
-    flex-direction: column;
-    overflow: visible;
-    min-height: 0;
-  }
-
   #bookcover-demo-root .mobile-details-toggle {
     display: flex;
     align-items: center;
@@ -137,22 +143,49 @@
     transform: rotate(180deg);
   }
 
+  /* ── Device / overview area ── */
   #bookcover-demo-root .device-area {
     order: 1;
-    flex: none;
+    flex: 1 1 auto;
+    flex-direction: column;
     width: 100%;
-    min-height: min(72dvh, 560px);
+    min-height: min(62dvh, 520px);
     padding: 8px 10px 4px;
     align-items: stretch;
+    justify-content: flex-start;
+    overflow: visible;
+  }
+
+  #bookcover-demo-root .shell.flow-overview .device-area {
+    min-height: auto;
+    flex: 1 1 auto;
+    padding: 0;
+  }
+
+  #bookcover-demo-root .shell.flow-overview #info-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    flex: 1 1 auto !important;
+    align-self: stretch !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    padding: 16px !important;
+  }
+
+  #bookcover-demo-root .shell.flow-overview .ipad-col {
+    display: none !important;
   }
 
   #bookcover-demo-root .ipad-col {
     width: 100%;
-    height: 100%;
+    flex: 1 1 auto;
+    min-height: min(58dvh, 480px);
     align-items: stretch;
   }
 
-  /* Full-width phone frame — drop heavy iPad bezel on small screens */
   #bookcover-demo-root .ipad {
     width: 100%;
     max-width: 100%;
@@ -176,6 +209,7 @@
 
   #bookcover-demo-root .ipad-screen {
     border-radius: 14px;
+    min-height: 0;
   }
 
   /* Collapsible presenter sidebar */
@@ -210,11 +244,7 @@
     display: none;
   }
 
-  /* Overview / info panel */
-  #bookcover-demo-root #info-panel {
-    padding: 16px !important;
-  }
-
+  /* Overview panel content grids */
   #bookcover-demo-root #info-panel [style*="grid-template-columns:1fr 1fr"],
   #bookcover-demo-root #info-panel [style*="grid-template-columns: repeat(4"],
   #bookcover-demo-root #info-panel [style*="grid-template-columns:repeat(4"] {
@@ -285,7 +315,7 @@
   }
 
   #bookcover-demo-root .device-area {
-    min-height: min(68dvh, 480px);
+    min-height: min(56dvh, 440px);
     padding: 6px 8px 2px;
   }
 
