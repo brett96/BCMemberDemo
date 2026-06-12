@@ -1,0 +1,301 @@
+/**
+ * Mobile layout for BookCover Member demo.
+ * Kept separate from demo.css so npm run sync:demo does not overwrite it.
+ */
+
+@media (max-width: 900px) {
+  html,
+  body {
+    overflow: auto;
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  #bookcover-demo-root {
+    min-height: 100dvh;
+    height: auto;
+  }
+
+  #bookcover-demo-root .shell {
+    width: 100%;
+    min-height: 100dvh;
+    height: auto;
+    overflow: visible;
+  }
+
+  /* ── Top bar ── */
+  #bookcover-demo-root .topbar {
+    height: auto;
+    min-height: 44px;
+    padding: 8px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  #bookcover-demo-root .logo {
+    font-size: 14px;
+  }
+
+  #bookcover-demo-root .tb-label {
+    font-size: 10px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  #bookcover-demo-root .tb-right {
+    width: 100%;
+    justify-content: space-between;
+    margin-left: 0;
+    gap: 10px;
+  }
+
+  #bookcover-demo-root .kb {
+    display: none;
+  }
+
+  #bookcover-demo-root .tb-prog {
+    flex: 1;
+    max-width: none;
+  }
+
+  #bookcover-demo-root .tb-ctr {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  /* ── Flow tabs ── */
+  #bookcover-demo-root .flow-tabbar {
+    height: auto;
+    min-height: 44px;
+    padding: 0 4px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  #bookcover-demo-root .flow-tabbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  #bookcover-demo-root .flow-tab {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    padding: 8px 12px;
+    gap: 6px;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 52px;
+  }
+
+  #bookcover-demo-root .flow-tab .ft-l {
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  #bookcover-demo-root .flow-tab .ft-s {
+    font-size: 8px;
+    white-space: nowrap;
+  }
+
+  /* ── Main: stack device above sidebar ── */
+  #bookcover-demo-root .main {
+    flex-direction: column;
+    overflow: visible;
+    min-height: 0;
+  }
+
+  #bookcover-demo-root .mobile-details-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: calc(100% - 24px);
+    margin: 0 12px 8px;
+    padding: 10px 14px;
+    border: 1px solid #d4ead9;
+    border-radius: 10px;
+    background: #f5faf6;
+    color: #085041;
+    font-family: "DM Sans", ui-sans-serif, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    order: 2;
+    flex-shrink: 0;
+  }
+
+  #bookcover-demo-root .mobile-details-toggle::after {
+    content: "▾";
+    font-size: 11px;
+    opacity: 0.7;
+    transition: transform 0.2s ease;
+  }
+
+  #bookcover-demo-root .shell.mobile-sidebar-open .mobile-details-toggle::after {
+    transform: rotate(180deg);
+  }
+
+  #bookcover-demo-root .device-area {
+    order: 1;
+    flex: none;
+    width: 100%;
+    min-height: min(72dvh, 560px);
+    padding: 8px 10px 4px;
+    align-items: stretch;
+  }
+
+  #bookcover-demo-root .ipad-col {
+    width: 100%;
+    height: 100%;
+    align-items: stretch;
+  }
+
+  /* Full-width phone frame — drop heavy iPad bezel on small screens */
+  #bookcover-demo-root .ipad {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: none;
+    aspect-ratio: auto;
+    padding: 10px 8px;
+    border-radius: 20px;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+      0 12px 32px rgba(0, 0, 0, 0.18);
+  }
+
+  #bookcover-demo-root .pwr,
+  #bookcover-demo-root .mut,
+  #bookcover-demo-root .vup,
+  #bookcover-demo-root .vdn,
+  #bookcover-demo-root .pen {
+    display: none;
+  }
+
+  #bookcover-demo-root .ipad-screen {
+    border-radius: 14px;
+  }
+
+  /* Collapsible presenter sidebar */
+  #bookcover-demo-root .sidebar {
+    order: 3;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 16px;
+    border-right: none;
+    border-top: 1px solid #e2e8f0;
+    opacity: 0;
+    transition:
+      max-height 0.35s ease,
+      padding 0.35s ease,
+      opacity 0.25s ease;
+  }
+
+  #bookcover-demo-root .shell.mobile-sidebar-open .sidebar {
+    max-height: 2400px;
+    padding: 16px;
+    opacity: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #bookcover-demo-root .st {
+    font-size: 16px;
+  }
+
+  #bookcover-demo-root .snote {
+    display: none;
+  }
+
+  /* Overview / info panel */
+  #bookcover-demo-root #info-panel {
+    padding: 16px !important;
+  }
+
+  #bookcover-demo-root #info-panel [style*="grid-template-columns:1fr 1fr"],
+  #bookcover-demo-root #info-panel [style*="grid-template-columns: repeat(4"],
+  #bookcover-demo-root #info-panel [style*="grid-template-columns:repeat(4"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  #bookcover-demo-root #info-panel [style*="margin-left:auto"][style*="Carrier Presentation"] {
+    display: none !important;
+  }
+
+  #bookcover-demo-root #info-panel [style*="font-size:28px"] {
+    font-size: 22px !important;
+  }
+
+  #bookcover-demo-root #info-panel [style*="justify-content:space-between"] {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  /* ── Bottom controls ── */
+  #bookcover-demo-root .controls {
+    position: sticky;
+    bottom: 0;
+    z-index: 50;
+    height: auto;
+    min-height: 52px;
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+    gap: 8px;
+    box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.08);
+  }
+
+  #bookcover-demo-root .nbtn {
+    padding: 10px 12px;
+    font-size: 0;
+    gap: 0;
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  #bookcover-demo-root .nbtn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  #bookcover-demo-root .dots {
+    flex: 1;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3px;
+    max-width: calc(100% - 120px);
+  }
+
+  #bookcover-demo-root .dot.on {
+    width: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  #bookcover-demo-root .flow-tab .ft-s {
+    display: none;
+  }
+
+  #bookcover-demo-root .flow-tab {
+    min-height: 44px;
+    padding: 8px 10px;
+  }
+
+  #bookcover-demo-root .device-area {
+    min-height: min(68dvh, 480px);
+    padding: 6px 8px 2px;
+  }
+
+  #bookcover-demo-root .tb-sep {
+    display: none;
+  }
+}
+
+@media (min-width: 901px) {
+  #bookcover-demo-root .mobile-details-toggle {
+    display: none !important;
+  }
+}

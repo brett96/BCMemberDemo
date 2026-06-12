@@ -2,6 +2,27 @@
 
 import { useEffect, useRef } from "react";
 
+function enhanceMobileLayout(root: HTMLElement) {
+  if (!window.matchMedia("(max-width: 900px)").matches) return;
+
+  const shell = root.querySelector(".shell");
+  const sidebar = root.querySelector(".sidebar");
+  if (!shell || !sidebar || root.querySelector(".mobile-details-toggle")) return;
+
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "mobile-details-toggle";
+  btn.textContent = "Presenter notes";
+  btn.setAttribute("aria-expanded", "false");
+  btn.addEventListener("click", () => {
+    const open = shell.classList.toggle("mobile-sidebar-open");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    btn.textContent = open ? "Hide presenter notes" : "Presenter notes";
+  });
+
+  sidebar.before(btn);
+}
+
 function initDemo() {
   if (typeof window.switchFlow === "function") {
     window.switchFlow(0);
@@ -27,6 +48,7 @@ export function MemberDemo() {
       if (cancelled || !rootRef.current) return;
 
       rootRef.current.innerHTML = shellHtml;
+      enhanceMobileLayout(rootRef.current);
 
       if (document.querySelector('script[data-demo-runtime="1"]')) {
         initDemo();

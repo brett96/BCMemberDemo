@@ -1,5 +1,6 @@
 import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
 import "@/styles/demo.css";
+import "@/styles/demo-mobile.css";
 
 export default function DemoLayout({
   children,
