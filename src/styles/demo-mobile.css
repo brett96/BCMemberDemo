@@ -24,6 +24,7 @@
 
   #bookcover-demo-root .shell {
     width: 100%;
+    max-width: 100%;
     min-height: 100dvh;
     height: auto;
     overflow: visible;
@@ -149,13 +150,14 @@
     flex: 1 1 auto;
     flex-direction: column;
     width: 100%;
-    min-height: min(62dvh, 520px);
-    padding: 8px 10px 4px;
+    min-height: 0;
+    padding: 0;
     align-items: stretch;
     justify-content: flex-start;
     overflow: visible;
   }
 
+  /* Overview tab: info panel only */
   #bookcover-demo-root .shell.flow-overview .device-area {
     min-height: auto;
     flex: 1 1 auto;
@@ -179,20 +181,32 @@
     display: none !important;
   }
 
-  #bookcover-demo-root .ipad-col {
-    width: 100%;
+  /* Demo flows: full-width phone frame */
+  #bookcover-demo-root .shell:not(.flow-overview) .device-area {
+    padding: 6px 0 0;
     flex: 1 1 auto;
-    min-height: min(58dvh, 480px);
-    align-items: stretch;
+    min-height: calc(100dvh - 200px);
   }
 
-  #bookcover-demo-root .ipad {
+  #bookcover-demo-root .shell:not(.flow-overview) .ipad-col {
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: calc(100dvh - 210px);
+    height: auto;
+    align-items: stretch;
+    justify-content: center;
+    padding: 0 8px;
+  }
+
+  #bookcover-demo-root .shell:not(.flow-overview) .ipad {
     width: 100%;
     max-width: 100%;
-    height: 100%;
+    height: auto;
+    min-height: calc(100dvh - 220px);
     max-height: none;
-    aspect-ratio: auto;
-    padding: 10px 8px;
+    aspect-ratio: 9 / 16;
+    margin: 0 auto;
+    padding: 8px 6px;
     border-radius: 20px;
     box-shadow:
       inset 0 0 0 1px rgba(255, 255, 255, 0.15),
@@ -209,7 +223,43 @@
 
   #bookcover-demo-root .ipad-screen {
     border-radius: 14px;
+    flex: 1;
     min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /*
+   * Desktop runtime scales mockup HTML to ~82% inside the iPad frame.
+   * On mobile that double-shrinks content — reset to fill the frame.
+   */
+  #bookcover-demo-root .app-col > div[style*="transform:scale"],
+  #bookcover-demo-root .full-bleed > div[style*="transform:scale"] {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    transform: none !important;
+    transform-origin: initial !important;
+  }
+
+  #bookcover-demo-root .saf-body,
+  #bookcover-demo-root .app-col,
+  #bookcover-demo-root .full-bleed {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #bookcover-demo-root .ios-bar,
+  #bookcover-demo-root .saf,
+  #bookcover-demo-root .mail-bar,
+  #bookcover-demo-root .hbar {
+    flex-shrink: 0;
   }
 
   /* Collapsible presenter sidebar */
@@ -314,9 +364,19 @@
     padding: 8px 10px;
   }
 
-  #bookcover-demo-root .device-area {
-    min-height: min(56dvh, 440px);
-    padding: 6px 8px 2px;
+  #bookcover-demo-root .shell:not(.flow-overview) .device-area {
+    min-height: calc(100dvh - 190px);
+  }
+
+  #bookcover-demo-root .shell:not(.flow-overview) .ipad-col {
+    min-height: calc(100dvh - 200px);
+    padding: 0 4px;
+  }
+
+  #bookcover-demo-root .shell:not(.flow-overview) .ipad {
+    min-height: calc(100dvh - 210px);
+    padding: 6px 4px;
+    border-radius: 16px;
   }
 
   #bookcover-demo-root .tb-sep {
